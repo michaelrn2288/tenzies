@@ -1,0 +1,32 @@
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgba(11, 36, 52, 1);
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    width: 92vw;
+    height: 92vh;
+    background-color:rgba(245, 245, 245, 1);
+    margin-top: 4vh;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dice-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.4rem;
+}
