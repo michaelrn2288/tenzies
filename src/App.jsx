@@ -10,16 +10,24 @@ export default function App() {
         for (let i = 0; i < 10; i++) {
             const die = {
                 value: randomDieNum(),
-                isHeld: false
+                isHeld: false,
+                id: i,
             }
             dice = [...dice, die]
-            console.log(dice)
         }
         return dice
     }
 
     function randomDieNum() {
         return Math.ceil(Math.random() * 6)
+    }
+
+    function holdDie (id) {
+        setDice(prevDice => prevDice.map ( die => {
+            return die.id === id ?
+                {...die, isHeld: !die.isHeld} :
+                die
+        }))
     }
 
 
@@ -29,6 +37,7 @@ export default function App() {
                 value={die.value}
                 key={index}
                 isHeld={die.isHeld}
+                holdDie={()=>holdDie(die.id)}
             />
         )
     }
