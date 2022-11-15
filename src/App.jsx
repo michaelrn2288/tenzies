@@ -18,6 +18,12 @@ export default function App() {
         return dice
     }
 
+    function rollDice() {
+        setDice(prevDice => prevDice.map( die => {
+            return die.isHeld ? die : {...die, value: randomDieNum()}
+        }))
+    }
+
     function randomDieNum() {
         return Math.ceil(Math.random() * 6)
     }
@@ -53,7 +59,7 @@ export default function App() {
                 {diceElements}
             </div>
             <button
-                onClick={()=>setDice(generateDice())}
+                onClick={rollDice}
             >Roll</button>
         </main>
     )
