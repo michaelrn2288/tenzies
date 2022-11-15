@@ -42,6 +42,9 @@ export default function App() {
             <div className="dice-container">
                 {diceElement}
             </div>
+            <button
+                onClick={()=>setDice(generateDice())}
+            >Roll</button>
         </main>
     )
 }
