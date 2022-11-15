@@ -1,5 +1,6 @@
 import React from 'react'
 import Die from './components/Die'
+import Records from './components/Records'
 import Confetti from 'react-confetti'
 
 export default function App() {
@@ -19,8 +20,8 @@ export default function App() {
     React.useEffect(() => {
         if (!tenzies) return
         if (!rollCounter) return
-        if (!rollCountRecord) localStorage.setItem('rollCountRecord', rollCounter)
-        rollCountRecord && rollCountRecord > rollCounter && localStorage.setItem('rollCountRecord', rollCounter)
+        !rollCountRecord && localStorage.setItem('rollCountRecord', rollCounter)
+        rollCounter < rollCountRecord && localStorage.setItem('rollCountRecord', rollCounter)
     }, [tenzies])
 
     function generateDice() {
@@ -82,12 +83,7 @@ export default function App() {
                     {`number of rolls: ${rollCounter}`}
                 </div>
             </div>
-            <div className="record-container">
-                <h2>Records</h2>
-                <div className="roll-record">
-                    {rollCountRecord ? `lowest number of rolls: ${rollCountRecord}` : ''}
-                </div>
-            </div>
+            <Records rollCountRecord={rollCountRecord} />
             <h1>{tenzies ? 'You Won!' : 'Tenzies'}</h1>
             <p className="instructions">
                 {tenzies ? '' : `Roll untill all dice are the same value.
