@@ -4,6 +4,12 @@ import Die from './components/Die'
 export default function App() {
 
     const [dice, setDice] = React.useState(generateDice())
+    const [tenzies, setTenzies] = React.useState(false)
+
+    React.useEffect(()=>{
+        const areDiceEqual = dice.every(die => die.value === dice[0].value)
+        console.log(areDiceEqual)
+    }, [dice])
 
     function generateDice() {
         let dice = []
