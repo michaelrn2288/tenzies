@@ -6,6 +6,7 @@ export default function App() {
 
     const [dice, setDice] = React.useState(generateDice())
     const [tenzies, setTenzies] = React.useState(false)
+    const [rollCounter, setRollCounter] = React.useState(0)
 
     React.useEffect(()=>{
         const areDiceEqual = dice.every(die => die.value === dice[0].value)
@@ -29,6 +30,7 @@ export default function App() {
         setDice(prevDice => prevDice.map( die => {
             return die.isHeld ? die : {...die, value: randomDieNum()}
         }))
+        setRollCounter(prevCounter => prevCounter + 1 )
     }
 
     function randomDieNum() {
@@ -45,6 +47,7 @@ export default function App() {
 
     function newGame () {
         setDice(generateDice())
+        setRollCounter(0)
     }
 
 
@@ -63,6 +66,11 @@ export default function App() {
     return (
         <main>
             {tenzies && <Confetti /> }
+            <div className="current-score">
+                <div className="rolls-tracker">
+                    {`number of rolls: ${rollCounter}`}
+                </div>
+            </div>
             <h1>{tenzies ? 'You Won!': 'Tenzies'}</h1>
             <p className="instructions">
                 {tenzies ? '' : `Roll untill all dice are the same value.
