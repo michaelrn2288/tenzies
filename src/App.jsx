@@ -1,5 +1,6 @@
 import React from 'react'
 import Die from './components/Die'
+import Confetti from 'react-confetti'
 
 export default function App() {
 
