@@ -23,11 +23,12 @@ export default function App() {
     }
 
 
-    const diceElement = dice.map((die, index) => {
+    const diceElements = dice.map((die, index) => {
         return (
             <Die
                 value={die.value}
                 key={index}
+                isHeld={die.isHeld}
             />
         )
     }
@@ -40,7 +41,7 @@ export default function App() {
                 Click each die to freeze it at its current value between rolls.</p>
 
             <div className="dice-container">
-                {diceElement}
+                {diceElements}
             </div>
             <button
                 onClick={()=>setDice(generateDice())}
