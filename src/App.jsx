@@ -9,7 +9,7 @@ export default function App() {
 
     React.useEffect(()=>{
         const areDiceEqual = dice.every(die => die.value === dice[0].value)
-        console.log(areDiceEqual)
+        areDiceEqual ? setTenzies(true) :setTenzies(false)
     }, [dice])
 
     function generateDice() {
@@ -43,6 +43,10 @@ export default function App() {
         }))
     }
 
+    function newGame () {
+        setDice(generateDice())
+    }
+
 
     const diceElements = dice.map((die, index) => {
         return (
@@ -58,6 +62,7 @@ export default function App() {
 
     return (
         <main>
+            {tenzies && <Confetti /> }
             <h1>Tenzies</h1>
             <p>Roll untill all dice are the same value.
                 Click each die to freeze it at its current value between rolls.</p>
@@ -66,8 +71,10 @@ export default function App() {
                 {diceElements}
             </div>
             <button
-                onClick={rollDice}
-            >Roll</button>
+                onClick={tenzies ? newGame : rollDice}
+            >
+                {tenzies ? 'New Game' : 'Roll'}
+            </button>
         </main>
     )
 }
