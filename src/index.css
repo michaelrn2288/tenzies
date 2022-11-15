@@ -41,7 +41,7 @@ h1 {
 .dice-container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 1.4rem;
+    gap: calc(18px + 0.6vw);
 }
 
 button {
