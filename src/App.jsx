@@ -1,5 +1,6 @@
 import React from 'react'
 import Die from './components/Die'
+import Scores from './components/Scores'
 import Records from './components/Records'
 import Confetti from 'react-confetti'
 
@@ -11,6 +12,17 @@ export default function App() {
     const [rollCountRecord, setRollCountRecord] = React.useState(
         localStorage.getItem('rollCountRecord') || 0
     )
+    const [initialGameTime, setInitialGameTime] = React.useState()
+    const [currentGameTime, setCurrentGameTime] = React.useState()
+
+
+    function updateTime() {
+        const dateNow = Date.now()
+        const elapsedTime = dateNow - initialGameTime
+        setCurrentGameTime(elapsedTime)
+        clearInterval(gameTimeCount)
+    }
+    const gameTimeCount = !tenzies && setInterval(updateTime, 100)
 
     React.useEffect(() => {
         const areDiceEqual = dice.every(die => die.value === dice[0].value)
@@ -60,6 +72,7 @@ export default function App() {
         setDice(generateDice())
         setRollCountRecord(localStorage.getItem('rollCountRecord'))
         setRollCounter(0)
+        setInitialGameTime()
     }
 
 
@@ -69,7 +82,10 @@ export default function App() {
                 value={die.value}
                 key={index}
                 isHeld={die.isHeld}
-                holdDie={() => holdDie(die.id)}
+                holdDie={() => {
+                    holdDie(die.id)
+                    !initialGameTime && setInitialGameTime(Date.now())
+                }}
             />
         )
     }
@@ -78,12 +94,14 @@ export default function App() {
     return (
         <main>
             {tenzies && <Confetti />}
-            <div className="score-container">
-                <div className="roll-tracker">
-                    {`number of rolls: ${rollCounter}`}
-                </div>
-            </div>
-            <Records rollCountRecord={rollCountRecord} />
+            <Scores
+                rollCounter={rollCounter}
+                currentGameTime={currentGameTime}
+            />
+            <Records
+                rollCountRecord={rollCountRecord}
+                initialGameTime={initialGameTime}
+            />
             <h1>{tenzies ? 'You Won!' : 'Tenzies'}</h1>
             <p className="instructions">
                 {tenzies ? '' : `Roll untill all dice are the same value.
@@ -94,7 +112,11 @@ export default function App() {
                 {diceElements}
             </div>
             <button
-                onClick={tenzies ? newGame : rollDice}
+                onClick={() => {
+                    tenzies ? newGame() : rollDice()
+                    !initialGameTime && setInitialGameTime(Date.now())
+
+                }}
             >
                 {tenzies ? 'New Game' : 'Roll'}
             </button>
