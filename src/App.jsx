@@ -8,7 +8,7 @@ export default function App() {
 
     const [dice, setDice] = React.useState(generateDice())
     const [tenzies, setTenzies] = React.useState(false)
-    const [rollCounter, setRollCounter] = React.useState(0)
+    const [rollCount, setRollCount] = React.useState(0)
     const [rollCountRecord, setRollCountRecord] = React.useState(
         localStorage.getItem('rollCountRecord') || 0
     )
@@ -17,7 +17,6 @@ export default function App() {
     const [gameTimeRecord, setGameTimeRecord] = React.useState(
         localStorage.getItem('gameTimeRecord') || 0
     )
-
 
     function updateTime() {
         const dateNow = Date.now()
@@ -34,9 +33,9 @@ export default function App() {
 
     React.useEffect(() => {
         if (!tenzies) return
-        if (!rollCounter) return
-        !rollCountRecord && localStorage.setItem('rollCountRecord', rollCounter)
-        rollCounter < rollCountRecord && localStorage.setItem('rollCountRecord', rollCounter)
+        if (!rollCount) return
+        !rollCountRecord && localStorage.setItem('rollCountRecord', rollCount)
+        rollCount < rollCountRecord && localStorage.setItem('rollCountRecord', rollCount)
     }, [tenzies])
 
     function generateDice() {
@@ -56,7 +55,7 @@ export default function App() {
         setDice(prevDice => prevDice.map(die => {
             return die.isHeld ? die : { ...die, value: randomDieNum() }
         }))
-        setRollCounter(prevCounter => prevCounter + 1)
+        setRollCount(prevCounter => prevCounter + 1)
     }
 
     function randomDieNum() {
@@ -75,10 +74,9 @@ export default function App() {
         setDice(generateDice())
         setRollCountRecord(localStorage.getItem('rollCountRecord'))
         setGameTimeRecord(localStorage.getItem('gameTimeRecord'))
-        setRollCounter(0)
+        setRollCount(0)
         setInitialGameTime()
     }
-
 
     const diceElements = dice.map((die, index) => {
         return (
@@ -103,7 +101,7 @@ export default function App() {
                 gameTimeRecord={gameTimeRecord}
             />
             <Scores
-                rollCounter={rollCounter}
+                rollCount={rollCount}
                 currentGameTime={currentGameTime}
                 tenzies={tenzies}
                 initialGameTime={initialGameTime}
@@ -122,7 +120,6 @@ export default function App() {
                 onClick={() => {
                     tenzies ? newGame() : rollDice()
                     !initialGameTime && setInitialGameTime(Date.now())
-
                 }}
             >
                 {tenzies ? 'New Game' : 'Roll'}

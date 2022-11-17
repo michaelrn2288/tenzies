@@ -30,7 +30,7 @@ export default function Scores(props) {
     return (
         <div className="score-container">
             <div className="roll-track-container">
-                current rolls: {props.rollCounter}
+                current rolls: {props.rollCount}
             </div>
 
             <div className="time-track-container">
