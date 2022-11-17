@@ -2,8 +2,14 @@ import React from 'react'
 import './Records.css'
 
 export default function Records(props) {
+
+    const recordsStyle = props.rollCountRecord ? {
+        border: '1px solid rgba(111,111,111, 0.7)',
+        borderRadius: '5px',
+    } : {}
+
     return (
-        <div className="record-container" >
+        <div className="record-container" style={recordsStyle}>
             <h2 className="record-title">{props.rollCountRecord || props.gameTimeRecord ? 'Records' : ''}</h2>
 
             <section className="records">
