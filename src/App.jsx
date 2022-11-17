@@ -14,6 +14,9 @@ export default function App() {
     )
     const [initialGameTime, setInitialGameTime] = React.useState()
     const [currentGameTime, setCurrentGameTime] = React.useState()
+    const [gameTimeRecord, setGameTimeRecord] = React.useState(
+        localStorage.getItem('gameTimeRecord') || 0
+    )
 
 
     function updateTime() {
@@ -71,6 +74,7 @@ export default function App() {
     function newGame() {
         setDice(generateDice())
         setRollCountRecord(localStorage.getItem('rollCountRecord'))
+        setGameTimeRecord(localStorage.getItem('gameTimeRecord'))
         setRollCounter(0)
         setInitialGameTime()
     }
@@ -94,13 +98,16 @@ export default function App() {
     return (
         <main>
             {tenzies && <Confetti />}
+            <Records
+                rollCountRecord={rollCountRecord}
+                gameTimeRecord={gameTimeRecord}
+            />
             <Scores
                 rollCounter={rollCounter}
                 currentGameTime={currentGameTime}
-            />
-            <Records
-                rollCountRecord={rollCountRecord}
+                tenzies={tenzies}
                 initialGameTime={initialGameTime}
+                setGameTimeRecord={setGameTimeRecord}
             />
             <h1>{tenzies ? 'You Won!' : 'Tenzies'}</h1>
             <p className="instructions">

@@ -1,9 +1,8 @@
 .score-container {
     display: flex;
+    justify-content: space-between;
+    width: calc(220px + 11vw);
     color: rgb(111,111,111);
-    margin-left: calc(50px + 2.5vw);
-}
-
-.roll-track-container, .time-track-container {
-    width: calc(100px + 5vw);
+    margin-top: 10px;
+    font-size: 0.9em;
 }
